@@ -1,0 +1,4 @@
+shader colour (color Cs = 1 [[int lockgeom=0]], output color Cout=0) 
+{
+    Cout=Cs;
+}
