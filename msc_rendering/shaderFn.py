@@ -17,9 +17,8 @@ def compile_shaders(shaders_paths: list) -> None:
         return
     for shader_source in shaders_paths:
         Logger.info("Compiling shader {0}".format(shader_source.name))
-        # out_file = shader_source.with_suffix(".oso")
-        # compile_command = "oslc.exe -o {0} {1} ".format(out_file, shader_source)
-        compile_command = "oslc.exe {0}".format(shader_source)
+        out_file = shader_source.with_suffix(".oso")
+        compile_command = "oslc.exe -o {0} {1} ".format(out_file, shader_source)
         try:
             subprocess.check_output(compile_command, stderr=subprocess.STDOUT, shell=True)
         except subprocess.CalledProcessError as err:
