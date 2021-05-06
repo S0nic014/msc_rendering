@@ -50,4 +50,24 @@ def draw_scene(ri: prman.Ri):
     ri.Hyperboloid([0.95, 0.0, -0.5], [0.5, 0.0, 0.2], 360)
     ri.TransformEnd()
 
+    # Cap side
+    ri.Bxdf('PxrSurface',
+            'bxdf',
+            {'color diffuseColor': [1, 0, 0]
+             })
+    ri.TransformBegin()
+    ri.Translate(0, 0, 2.25)
+    ri.Cylinder(0.6, 0, 0.25, 360)
+    ri.TransformEnd()
+
+    # Cap top
+    ri.Bxdf('PxrSurface',
+            'bxdf',
+            {'color diffuseColor': [1, 0, 0]
+             })
+    ri.TransformBegin()
+    ri.Translate(0, 0, 2.5)
+    ri.Disk(0, 0.6, 360)
+    ri.TransformEnd()
+
     ri.TransformEnd()
