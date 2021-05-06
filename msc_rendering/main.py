@@ -2,6 +2,7 @@ import prman
 import pathlib
 import msc_rendering.shaderFn as shaderFn
 import msc_rendering.primitivesFn as primitivesFn
+import msc_rendering.yakult as yakult
 
 ARCHIVES_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'archives'
 SHADERS_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'shaders'
@@ -37,7 +38,7 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # World descrition
     ri.WorldBegin()
 
-    ri.Translate(0, 0, 7)
+    ri.Translate(0, 0, 5)
     ri.Rotate(-30, 1, 0, 0)
     ri.Rotate(30, 0, 1, 0)
 
@@ -62,32 +63,13 @@ def main(recompile_shaders=True, resolution=(720, 576)):
             {
                 'reference color baseColor': ['colourShader:Cout']
             })
-
     primitivesFn.draw_cube(ri, scale=[10, 1, 10])
     ri.TransformEnd()
 
-    # Glass
+    # Yakult
     ri.TransformBegin()
-    # ri.Pattern('glass', 'glassShader', {})
-    ri.Bxdf('PxrSurface', 'bxdf', {'float diffuseGain': 0.0,
-                                   'float refractionGain': 1.0,
-                                   'float reflectionGain': 1.0})
-    ri.Sphere(1, -1, 1, 360)
+    yakult.draw_scene(ri)
 
-    # Liquid
-    ri.Pattern('liquid', 'liquidShader', {"color baseColor": [0.4, 0.0, 0],
-                                          "float fillLevel": 0.5})
-    ri.Bxdf('PxrSurface',
-            'bxdf',
-            {
-                'reference color diffuseColor': ['liquidShader:Cout'],
-                'reference float presence': ["liquidShader:Aout"]
-            })
-
-    ri.TransformBegin()
-    ri.Scale(0.95, 0.95, 0.95)
-    ri.Sphere(1, -1, 1, 360)
-    ri.TransformEnd()
     ri.TransformEnd()
 
     ri.WorldEnd()
@@ -95,4 +77,4 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
 
 if __name__ == "__main__":
-    main(recompile_shaders=True, resolution=(720, 576))
+    main(recompile_shaders=False, resolution=(720, 576))
