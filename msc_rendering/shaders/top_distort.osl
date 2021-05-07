@@ -1,0 +1,14 @@
+shader distort (
+	color Cin=1,
+output  color Cout=1
+)
+{
+    float s=u+(float)noise("uperlin",P*5)*0.5;
+    float noisep = noise("uperlin",s*5,s*5);
+
+    color sunken = -2 * N;
+    color result = noisep * sunken * v;
+
+    Cout = (color)result;
+}
+

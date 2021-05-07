@@ -77,4 +77,4 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
 
 if __name__ == "__main__":
-    main(recompile_shaders=False, resolution=(720, 576))
+    main(recompile_shaders=True, resolution=(720, 576))
