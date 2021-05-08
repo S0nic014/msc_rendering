@@ -3,10 +3,10 @@ shader distort (
 output  color Cout=1
 )
 {
-    float s=u+(float)noise("uperlin",P*5)*0.3;
-    float noisep = noise("uperlin",s*15,s*5);
-    color ribs = (P + N) * abs(v - 1.0) * 0.2;
-    color ribNoise = ((color)noisep + ribs) * abs(v - 1.0) * 3;
+    float s=(float)noise("uperlin",P*10)*0.5;
+    float noisep = noise("uperlin",s*10,s*5);
+    color ribs = (P+N) * 2.0;
+    color ribNoise = ((color)noisep + ribs) * abs(v - 1.0);
     Cout = ribNoise;
 }
 

@@ -40,7 +40,7 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
     ri.Translate(0, 0, 5)
     ri.Rotate(-40, 1, 0, 0)
-    ri.Rotate(30, 0, 1, 0)
+    ri.Rotate(60, 0, 1, 0)
 
     # Lights
     ri.AttributeBegin()
