@@ -17,7 +17,6 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # Interface
     ri = prman.Ri()
     ri.Option('rib', {'string asciistyle': 'indented'})
-    out_rib_path = 'output.rib'
 
     # Setup render
     ri.Begin('__render')
@@ -40,12 +39,12 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
     ri.Translate(0, 0, 5)
     ri.Rotate(-40, 1, 0, 0)
-    ri.Rotate(60, 0, 1, 0)
+    ri.Rotate(180, 0, 1, 0)
 
     # Lights
     ri.AttributeBegin()
     ri.Rotate(-90, 1, 0, 0)
-    ri.Rotate(30, 0, 0, 1)
+    ri.Rotate(0, 0, 0, 1)
     ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
                                          "string lightColorMap": "comfy_cafe_2k.tx"})
     ri.AttributeEnd()

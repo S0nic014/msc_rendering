@@ -3,21 +3,30 @@ import prman
 
 def draw_scene(ri: prman.Ri):
     # Base
+    ri.Pattern('PxrManifold3D', 'logo_manifold', {})
+    ri.Pattern('PxrProjectionLayer', 'logo_prj', {'string filename': 'yakult_logo_circle.tx',
+                                                  'reference struct manifold': 'logo_manifold:result'})
+    ri.Pattern('PxrProjectionStack', 'base_prj_stack', {'reference color layersRGB': 'logo_prj:resultRGB'})
+    ri.Pattern('PxrLayeredTexture', 'logo_txr', {'string filename': ['yakult_logo_circle.tx']})
+    ri.Pattern('Layer', 'logo_layer', {})
+
     ri.TransformBegin()
     ri.Rotate(-90, 1, 0, 0)
-    ri.Bxdf('PxrSurface',
-            'bxdf',
+    ri.Bxdf('PxrLayerSurface',
+            'base_surface',
             {
                 'color diffuseColor': [0.84, 0.73, 0.65],
+                # 'reference color diffuseColor': 'logo_txr:resultRGB',
+                # 'reference color diffuseColor': 'base_prj_stack:resultRGB'
             })
     ri.Cylinder(1, -0.5, 0.7, 360)
 
     # Mid
     ri.TransformBegin()
-    # ri.Bxdf('PxrSurface',
-    #         'bxdf',
-    #         {'color diffuseColor': [1, 0, 0]
-    #          })
+    ri.Bxdf('PxrSurface',
+            'bxdf',
+            {'color diffuseColor': [0.84, 0.73, 0.65]
+             })
     ri.Translate(0, 0, 1)
     ri.Hyperboloid([1.0, 0, -0.3], [0.5, 0.8, 0.4], 360)
     ri.TransformEnd()
