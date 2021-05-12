@@ -4,6 +4,7 @@ import msc_rendering.shaderFn as shaderFn
 import msc_rendering.primitivesFn as primitivesFn
 import msc_rendering.yakult as yakult
 
+
 ARCHIVES_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'archives'
 SHADERS_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'shaders'
 TEXTURES_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'textures'
@@ -37,16 +38,31 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # World descrition
     ri.WorldBegin()
 
-    ri.Translate(0, 0, 5)
+    ri.Translate(0, 0, 4)
     ri.Rotate(-40, 1, 0, 0)
-    ri.Rotate(180, 0, 1, 0)
+    ri.Rotate(30, 0, 1, 0)
 
     # Lights
     ri.AttributeBegin()
     ri.Rotate(-90, 1, 0, 0)
-    ri.Rotate(0, 0, 0, 1)
+    ri.Translate(0, 10, 0)
+
+    # Cafe
     ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
+                                         'float intensity': [0.5],
                                          "string lightColorMap": "comfy_cafe_2k.tx"})
+
+    # Kitchen
+    # ri.Rotate(120, 0, 0, 1)
+    # ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
+    #                                      'float intensity': [0.3],
+    #                                      "string lightColorMap": "kitchen.tx"})
+
+    # # Hotel
+    # # ri.Rotate(120, 0, 0, 1)
+    # ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
+    #                                      'float intensity': [0.1],
+    #                                      "string lightColorMap": "hotel.tx"})
     ri.AttributeEnd()
 
     # Geometry
@@ -54,8 +70,8 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     ri.TransformBegin()
     ri.Translate(0, -2.0, 0)
     ri.Pattern('wood', 'colourShader', {"color Cin": [0.4, 0.2, 0.0],
-                                        "float scale": 2,
-                                        "float freq": 10,
+                                        "float scale": 3,
+                                        "float freq": 4,
                                         "float variation": 0.04})
     ri.Bxdf('PxrDisney',
             'bxdf',
@@ -68,7 +84,13 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # Yakult
     ri.TransformBegin()
     yakult.draw_scene(ri)
+    ri.TransformEnd()
 
+    ri.TransformBegin()
+    ri.Rotate(-90, 1, 0, 0)
+    ri.Translate(2.5, -1, 0)
+    ri.Rotate(-90, 0, 1, 0)
+    yakult.draw_scene(ri)
     ri.TransformEnd()
 
     ri.WorldEnd()

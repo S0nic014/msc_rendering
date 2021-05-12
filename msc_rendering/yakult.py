@@ -3,12 +3,12 @@ import prman
 
 def draw_scene(ri: prman.Ri):
     # Base
+    #     ri.Pattern('PxrLayer', 'PxrLayer2')
     ri.Pattern('PxrManifold3D', 'logo_manifold', {})
     ri.Pattern('PxrProjectionLayer', 'logo_prj', {'string filename': 'yakult_logo_circle.tx',
                                                   'reference struct manifold': 'logo_manifold:result'})
     ri.Pattern('PxrProjectionStack', 'base_prj_stack', {'reference color layersRGB': 'logo_prj:resultRGB'})
     ri.Pattern('PxrLayeredTexture', 'logo_txr', {'string filename': ['yakult_logo_circle.tx']})
-    ri.Pattern('Layer', 'logo_layer', {})
 
     ri.TransformBegin()
     ri.Rotate(-90, 1, 0, 0)
@@ -16,6 +16,8 @@ def draw_scene(ri: prman.Ri):
             'base_surface',
             {
                 'color diffuseColor': [0.84, 0.73, 0.65],
+                'color specularFaceColor': [0.3, 0.3, 0.3],
+                'float specularRoughness': [0.6]
                 # 'reference color diffuseColor': 'logo_txr:resultRGB',
                 # 'reference color diffuseColor': 'base_prj_stack:resultRGB'
             })
@@ -23,10 +25,10 @@ def draw_scene(ri: prman.Ri):
 
     # Mid
     ri.TransformBegin()
-    ri.Bxdf('PxrSurface',
-            'bxdf',
-            {'color diffuseColor': [0.84, 0.73, 0.65]
-             })
+#     ri.Bxdf('PxrSurface',
+#             'bxdf',
+#             {'color diffuseColor': [0.84, 0.73, 0.65]
+#              })
     ri.Translate(0, 0, 1)
     ri.Hyperboloid([1.0, 0, -0.3], [0.5, 0.8, 0.4], 360)
     ri.TransformEnd()
@@ -56,13 +58,15 @@ def draw_scene(ri: prman.Ri):
 
     ri.Attribute('displacementbound', {'sphere': [0.14], "coordinatesystem": ["object"]})
     ri.Pattern('distort', 'distortTx', {})
+
     ri.Displace('PxrDisplace', 'capDisplace', {'float dispAmount': [0.05],
                                                'reference vector dispVector': 'distortTx:Cout'})
 
     ri.Bxdf('PxrSurface',
             'bxdf',
             {'color diffuseColor': [0.38, 0.18, 0.20],
-             'float specularRoughness': 0.0
+             'color specularFaceColor': [0.8, 0.1, 0.1],
+             'float specularRoughness': [0.5]
              })
     ri.TransformBegin()
     ri.Translate(0, 0, 2.25)
@@ -81,7 +85,9 @@ def draw_scene(ri: prman.Ri):
 
     ri.Bxdf('PxrSurface',
             'bxdf',
-            {'color diffuseColor': [0.38, 0.18, 0.20]
+            {'color diffuseColor': [0.38, 0.18, 0.20],
+             'color specularFaceColor': [0.8, 0.1, 0.1],
+             'float specularRoughness': [0.5]
              })
     ri.TransformBegin()
     ri.Translate(0, 0, 2.5)

@@ -6,7 +6,7 @@ shader wood (
 output	color Cout=1
 	)
 {
-    color lightWood=color("rgb",1,0.6,0.5);
+    color lightWood=color("rgb",1.0,0.8,0.5);
     color darkWood=color("rgb",0.3,0.2,0.2);
     point PP;
     float l;
