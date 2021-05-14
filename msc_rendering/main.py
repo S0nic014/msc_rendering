@@ -69,14 +69,14 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # Table
     ri.TransformBegin()
     ri.Translate(0, -2.0, 0)
-    ri.Pattern('wood', 'colourShader', {"color Cin": [0.4, 0.2, 0.0],
-                                        "float scale": 3,
-                                        "float freq": 4,
-                                        "float variation": 0.04})
+    ri.Pattern('wood', 'wood_shader', {"color Cin": [0.4, 0.2, 0.0],
+                                       "float scale": 3,
+                                       "float freq": 4,
+                                       "float variation": 0.04})
     ri.Bxdf('PxrDisney',
             'bxdf',
             {
-                'reference color baseColor': ['colourShader:Cout']
+                'reference color baseColor': ['wood_shader:Cout']
             })
     primitivesFn.draw_cube(ri, scale=[10, 1, 10])
     ri.TransformEnd()
