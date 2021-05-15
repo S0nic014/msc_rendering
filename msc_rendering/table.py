@@ -19,5 +19,5 @@ def draw_scene(ri: prman.Ri):
                                            'reference normal bumpNormal': 'nbump:resultN'})
 
     # Draw
-    primitivesFn.draw_cube(ri, scale=[10, 1, 10])
+    primitivesFn.draw_cube(ri, scale=[10, 1, 10], width=1)
     ri.TransformEnd()

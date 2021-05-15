@@ -11,7 +11,7 @@ SHADERS_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'shaders'
 TEXTURES_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'textures'
 
 
-def main(recompile_shaders=True, resolution=(720, 576)):
+def main(recompile_shaders=True, resolution=(720, 576), render_to_file=False):
     shaderFn.tx_textures(TEXTURES_DIR)
     if recompile_shaders:
         shaderFn.compile_shaders(shaders_paths=shaderFn.list_shader_files(SHADERS_DIR))
@@ -26,11 +26,19 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     ri.Option('searchpath', {'string archive': ARCHIVES_DIR.as_posix()})
     ri.Option('searchpath', {'string shader': SHADERS_DIR.as_posix()})
     ri.Option('searchpath', {'string texture': TEXTURES_DIR.as_posix()})
+
     # Display
-    ri.Display("result_render.exr", "it", "rgba")
+    file_name = 'yakult.exr'
+    if render_to_file:
+        output = 'openexr'
+    else:
+        output = 'it'
+    ri.Display(file_name, output, "rgba")
     ri.Format(*resolution, 1)
 
     # Raytrace /integrators
+    ri.DepthOfField(20, 1.5, 2.5)
+    ri.ShadingRate(10)
     ri.Hider("raytrace", {"int incremental": [1]})
     ri.PixelVariance(0.01)
     ri.Integrator("PxrPathTracer", "integrator")
@@ -75,6 +83,7 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
     # Yakult
     ri.TransformBegin()
+    ri.Translate(0, -0.2, 0)
     yakult.draw_scene(ri)
     ri.TransformEnd()
 
@@ -91,4 +100,5 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
 if __name__ == "__main__":
     main(recompile_shaders=True, resolution=(720, 576))
-    # main(recompile_shaders=True, resolution=(1920, 1080))
+    # main(recompile_shaders=True, resolution=(1920, 1080), render_to_file=True)
+    # main(recompile_shaders=True, resolution=(3840, 2160), render_to_file=True)
