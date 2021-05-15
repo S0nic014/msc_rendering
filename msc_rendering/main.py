@@ -46,17 +46,17 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # Lights
     ri.AttributeBegin()
     ri.Rotate(-90, 1, 0, 0)
-    ri.Translate(0, 10, 0)
+    ri.Rotate(155, 0, 0, 1)
 
     # Cafe
     ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
-                                         'float intensity': [0.6],
+                                         'float intensity': [0.8],
                                          "string lightColorMap": "comfy_cafe_2k.tx"})
 
     # Kitchen
     # ri.Rotate(120, 0, 0, 1)
     # ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
-    #                                      'float intensity': [0.3],
+    #                                      'float intensity': [0.4],
     #                                      "string lightColorMap": "kitchen.tx"})
 
     # # Hotel
@@ -91,3 +91,4 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
 if __name__ == "__main__":
     main(recompile_shaders=True, resolution=(720, 576))
+    # main(recompile_shaders=True, resolution=(1920, 1080))

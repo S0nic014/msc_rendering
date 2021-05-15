@@ -10,7 +10,8 @@ def draw_scene(ri: prman.Ri):
     ri.Pattern('PxrTexture', 'diffuse_tx', {'string filename': ['wood_diffuse.tx']})
     ri.Pattern('PxrTexture', 'rough_tx', {'string filename': ['wood_roughness.tx']})
     ri.Pattern('PxrTexture', 'normal_tx', {'string filename': ['wood_normal.tx']})
-    ri.Pattern('PxrBump', 'nbump', {'reference normal inputN': ['normal_tx:resultRGB']})
+    ri.Pattern('PxrBump', 'nbump', {'reference normal inputN': ['normal_tx:resultRGB'],
+                                    'float scale': 1.1})
 
     # Material
     ri.Bxdf('PxrDisney', 'table_surface', {'reference color baseColor': 'diffuse_tx:resultRGB',

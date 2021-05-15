@@ -3,11 +3,15 @@ import prman
 
 def draw_scene(ri: prman.Ri):
     BOTTLE_DIFFUSE = [0.84, 0.73, 0.65]
-    BOTTLE_SPECULAR_FACE = [0.3, 0.3, 0.3]
-    BOTTLE_SPECULAR_ROUGHNESS = [0.6]
-    CAP_DIFFUSE = [0.38, 0.18, 0.20]
-    CAP_SPECULAR_FACE = [0.8, 0.1, 0.1]
-    CAP_SPECULAR_ROUGHNESS = [0.5]
+    BOTTLE_DIFFUSE_ROUGHNESS = [0.0]
+    BOTTLE_SPECULAR_EDGE = [1.0, 1.0, 1.0]
+    BOTTLE_SPECULAR_ROUGHNESS = [0.4]
+
+    CAP_DIFFUSE = [0.5, 0.18, 0.20]
+    CAP_DIFFUSE_ROUGHNESS = [0.0]
+    CAP_SPECULAR_EDGE = [1.0, 1.0, 1.0]
+    CAP_SPECULAR_EC = [0.2, 0.2, 0.2]
+    CAP_SPECULAR_ROUGHNESS = [0.45]
 
     # Under disk
     ri.AttributeBegin()
@@ -44,7 +48,8 @@ def draw_scene(ri: prman.Ri):
             'base_surface',
             {
                 'reference color diffuseColor': 'base_layer_blend:resultRGB',
-                'color specularFaceColor': BOTTLE_SPECULAR_FACE,
+                'int specularFresnelMode': [1],
+                'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Cylinder(1, -0.5, 0.7, 360)
@@ -58,7 +63,9 @@ def draw_scene(ri: prman.Ri):
             'base_surface',
             {
                 'color diffuseColor': BOTTLE_DIFFUSE,
-                'color specularFaceColor': BOTTLE_SPECULAR_FACE,
+                'float diffuseRoughness': BOTTLE_DIFFUSE_ROUGHNESS,
+                'int specularFresnelMode': [1],
+                'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Hyperboloid([1.0, 0, -0.3], [0.5, 0.8, 0.4], 360)
@@ -109,7 +116,9 @@ def draw_scene(ri: prman.Ri):
             'base_surface',
             {
                 'reference color diffuseColor': 'base_layer_blend:resultRGB',
-                'color specularFaceColor': BOTTLE_SPECULAR_FACE,
+                'float diffuseRoughness': BOTTLE_DIFFUSE_ROUGHNESS,
+                'int specularFresnelMode': [1],
+                'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Cylinder(0.95, 0, 0.35, 360)
@@ -121,7 +130,9 @@ def draw_scene(ri: prman.Ri):
             'bxdf',
             {
                 'color diffuseColor': BOTTLE_DIFFUSE,
-                'color specularFaceColor': BOTTLE_SPECULAR_FACE,
+                'float diffuseRoughness': BOTTLE_DIFFUSE_ROUGHNESS,
+                'int specularFresnelMode': [1],
+                'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Translate(0, 0, 2.25)
@@ -139,7 +150,10 @@ def draw_scene(ri: prman.Ri):
     ri.Bxdf('PxrSurface',
             'bxdf',
             {'color diffuseColor': CAP_DIFFUSE,
-             'color specularFaceColor': CAP_SPECULAR_FACE,
+             'float diffuseRoughness': CAP_DIFFUSE_ROUGHNESS,
+             'int specularFresnelMode': [1],
+             'color specularEdgeColor': CAP_SPECULAR_EDGE,
+             'color specularExtinctionCoeff': CAP_SPECULAR_EC,
              'float specularRoughness': CAP_SPECULAR_ROUGHNESS
              })
     ri.TransformBegin()
@@ -159,7 +173,10 @@ def draw_scene(ri: prman.Ri):
     ri.Bxdf('PxrSurface',
             'bxdf',
             {'color diffuseColor': CAP_DIFFUSE,
-             'color specularFaceColor': CAP_SPECULAR_FACE,
+             'float diffuseRoughness': CAP_DIFFUSE_ROUGHNESS,
+             'int specularFresnelMode': [1],
+             'color specularEdgeColor': CAP_SPECULAR_EDGE,
+             'color specularExtinctionCoeff': CAP_SPECULAR_EC,
              'float specularRoughness': CAP_SPECULAR_ROUGHNESS
              })
     ri.TransformBegin()
