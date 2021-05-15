@@ -26,7 +26,7 @@ def compile_shaders(shaders_paths: list) -> None:
 
 
 def tx_textures(texture_dir: pathlib.Path, force: bool = False):
-    valid_formats = [".tiff", ".exr", ".jpeg",
+    valid_formats = [".tiff", ".tif", ".exr", ".jpeg",
                      ".sgi", ".tga", ".mayaiff",
                      ".dpx", ".bmp", ".hdr",
                      ".png", ".gif", ".ppm", ".xpm"]

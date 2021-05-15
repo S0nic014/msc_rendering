@@ -3,6 +3,7 @@ import pathlib
 import msc_rendering.shaderFn as shaderFn
 import msc_rendering.primitivesFn as primitivesFn
 import msc_rendering.yakult as yakult
+import msc_rendering.table as table
 
 
 ARCHIVES_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'archives'
@@ -49,7 +50,7 @@ def main(recompile_shaders=True, resolution=(720, 576)):
 
     # Cafe
     ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
-                                         'float intensity': [0.5],
+                                         'float intensity': [0.6],
                                          "string lightColorMap": "comfy_cafe_2k.tx"})
 
     # Kitchen
@@ -59,7 +60,7 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     #                                      "string lightColorMap": "kitchen.tx"})
 
     # # Hotel
-    # # ri.Rotate(120, 0, 0, 1)
+    # ri.Rotate(-120, 0, 0, 1)
     # ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
     #                                      'float intensity': [0.1],
     #                                      "string lightColorMap": "hotel.tx"})
@@ -68,17 +69,8 @@ def main(recompile_shaders=True, resolution=(720, 576)):
     # Geometry
     # Table
     ri.TransformBegin()
-    ri.Translate(0, -2.0, 0)
-    ri.Pattern('wood', 'wood_shader', {"color Cin": [0.4, 0.2, 0.0],
-                                       "float scale": 3,
-                                       "float freq": 4,
-                                       "float variation": 0.04})
-    ri.Bxdf('PxrDisney',
-            'bxdf',
-            {
-                'reference color baseColor': ['wood_shader:Cout']
-            })
-    primitivesFn.draw_cube(ri, scale=[10, 1, 10])
+    ri.Rotate(-20, 0, 1, 0)
+    table.draw_scene(ri)
     ri.TransformEnd()
 
     # Yakult

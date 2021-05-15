@@ -117,10 +117,13 @@ def draw_scene(ri: prman.Ri):
 
     # Upper cone
     ri.TransformBegin()
-    # ri.Bxdf('PxrSurface',
-    #         'bxdf',
-    #         {'color diffuseColor': BOTTLE_DIFFUSE
-    #          })
+    ri.Bxdf('PxrSurface',
+            'bxdf',
+            {
+                'color diffuseColor': BOTTLE_DIFFUSE,
+                'color specularFaceColor': BOTTLE_SPECULAR_FACE,
+                'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
+            })
     ri.Translate(0, 0, 2.25)
     ri.Hyperboloid([0.95, 0.0, -0.5], [0.5, 0.0, 0.15], 360)
     ri.TransformEnd()
