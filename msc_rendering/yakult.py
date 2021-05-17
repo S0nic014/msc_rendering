@@ -5,13 +5,14 @@ def draw_scene(ri: prman.Ri):
     BOTTLE_DIFFUSE = [0.84, 0.73, 0.65]
     BOTTLE_DIFFUSE_ROUGHNESS = [0.0]
     BOTTLE_SPECULAR_EDGE = [1.0, 1.0, 1.0]
+    BOTTLE_SPECULAR_EC = [0.9, 0.9, 0.9]
     BOTTLE_SPECULAR_ROUGHNESS = [0.4]
 
     CAP_DIFFUSE = [0.5, 0.18, 0.20]
     CAP_DIFFUSE_ROUGHNESS = [0.0]
     CAP_SPECULAR_EDGE = [1.0, 1.0, 1.0]
-    CAP_SPECULAR_EC = [0.2, 0.2, 0.2]
-    CAP_SPECULAR_ROUGHNESS = [0.45]
+    CAP_SPECULAR_EC = [0.8, 0.8, 0.8]
+    CAP_SPECULAR_ROUGHNESS = [0.3]
 
     # Under disk
     ri.AttributeBegin()
@@ -50,6 +51,7 @@ def draw_scene(ri: prman.Ri):
                 'reference color diffuseColor': 'base_layer_blend:resultRGB',
                 'int specularFresnelMode': [1],
                 'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
+                'color specularExtinctionCoeff': BOTTLE_SPECULAR_EC,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Cylinder(1, -0.5, 0.7, 360)
@@ -66,6 +68,7 @@ def draw_scene(ri: prman.Ri):
                 'float diffuseRoughness': BOTTLE_DIFFUSE_ROUGHNESS,
                 'int specularFresnelMode': [1],
                 'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
+                'color specularExtinctionCoeff': BOTTLE_SPECULAR_EC,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Hyperboloid([1.0, 0, -0.3], [0.5, 0.8, 0.4], 360)
@@ -119,6 +122,7 @@ def draw_scene(ri: prman.Ri):
                 'float diffuseRoughness': BOTTLE_DIFFUSE_ROUGHNESS,
                 'int specularFresnelMode': [1],
                 'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
+                'color specularExtinctionCoeff': BOTTLE_SPECULAR_EC,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Cylinder(0.95, 0, 0.35, 360)
@@ -133,6 +137,7 @@ def draw_scene(ri: prman.Ri):
                 'float diffuseRoughness': BOTTLE_DIFFUSE_ROUGHNESS,
                 'int specularFresnelMode': [1],
                 'color specularEdgeColor': BOTTLE_SPECULAR_EDGE,
+                'color specularExtinctionCoeff': BOTTLE_SPECULAR_EC,
                 'float specularRoughness': BOTTLE_SPECULAR_ROUGHNESS
             })
     ri.Translate(0, 0, 2.25)

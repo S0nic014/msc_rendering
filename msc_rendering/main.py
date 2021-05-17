@@ -1,5 +1,6 @@
 import prman
 import pathlib
+from msc_rendering import Logger
 import msc_rendering.shaderFn as shaderFn
 import msc_rendering.primitivesFn as primitivesFn
 import msc_rendering.yakult as yakult
@@ -11,7 +12,7 @@ SHADERS_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'shaders'
 TEXTURES_DIR = pathlib.Path.cwd() / 'msc_rendering' / 'textures'
 
 
-def main(recompile_shaders=True, resolution=(720, 576), render_to_file=False):
+def main(recompile_shaders=True, resolution=(720, 576), render_to_file: bool = False, hdri="cafe"):
     shaderFn.tx_textures(TEXTURES_DIR)
     if recompile_shaders:
         shaderFn.compile_shaders(shaders_paths=shaderFn.list_shader_files(SHADERS_DIR))
@@ -33,6 +34,7 @@ def main(recompile_shaders=True, resolution=(720, 576), render_to_file=False):
         output = 'openexr'
     else:
         output = 'it'
+
     ri.Display(file_name, output, "rgba")
     ri.Format(*resolution, 1)
 
@@ -54,24 +56,27 @@ def main(recompile_shaders=True, resolution=(720, 576), render_to_file=False):
     # Lights
     ri.AttributeBegin()
     ri.Rotate(-90, 1, 0, 0)
-    ri.Rotate(155, 0, 0, 1)
 
     # Cafe
-    ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
-                                         'float intensity': [0.8],
-                                         "string lightColorMap": "comfy_cafe_2k.tx"})
+    if hdri == "cafe":
+        ri.Rotate(-40, 0, 0, 1)
+        ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
+                                             'float intensity': [0.8],
+                                             "string lightColorMap": "comfy_cafe_2k.tx"})
+    elif hdri == "kitchen":
+        ri.Rotate(120, 0, 0, 1)
+        ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
+                                             'float intensity': [0.5],
+                                             "string lightColorMap": "kitchen.tx"})
+    elif hdri == "hotel":
+        ri.Rotate(-120, 0, 0, 1)
+        ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
+                                             'float intensity': [0.1],
+                                             "string lightColorMap": "hotel.tx"})
+    else:
+        Logger.error("Invalid HDRI name")
+        raise ValueError
 
-    # Kitchen
-    # ri.Rotate(120, 0, 0, 1)
-    # ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
-    #                                      'float intensity': [0.4],
-    #                                      "string lightColorMap": "kitchen.tx"})
-
-    # # Hotel
-    # ri.Rotate(-120, 0, 0, 1)
-    # ri.Light('PxrDomeLight', 'skyDome', {'float exposure': [0],
-    #                                      'float intensity': [0.1],
-    #                                      "string lightColorMap": "hotel.tx"})
     ri.AttributeEnd()
 
     # Geometry
@@ -90,7 +95,7 @@ def main(recompile_shaders=True, resolution=(720, 576), render_to_file=False):
     ri.TransformBegin()
     ri.Rotate(-90, 1, 0, 0)
     ri.Translate(2.5, -1, 0)
-    ri.Rotate(-90, 0, 1, 0)
+    ri.Rotate(120, 0, 1, 0)
     yakult.draw_scene(ri)
     ri.TransformEnd()
 
@@ -99,6 +104,6 @@ def main(recompile_shaders=True, resolution=(720, 576), render_to_file=False):
 
 
 if __name__ == "__main__":
-    main(recompile_shaders=True, resolution=(720, 576))
-    # main(recompile_shaders=True, resolution=(1920, 1080), render_to_file=True)
+    # main(recompile_shaders=True, resolution=(720, 576))
+    main(recompile_shaders=True, resolution=(1920, 1080), render_to_file=False)
     # main(recompile_shaders=True, resolution=(3840, 2160), render_to_file=True)
