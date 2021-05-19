@@ -1,0 +1,13 @@
+{
+    "resolution": [
+        1920,
+        1080
+    ],
+    "file_render": false,
+    "output_file": "yakult.exr",
+    "hdri": "cafe",
+    "recompile_shaders": true,
+    "fov": 90,
+    "pixel_variance": 0.01,
+    "shading_rate": 10
+}
